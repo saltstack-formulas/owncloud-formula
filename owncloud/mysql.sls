@@ -20,7 +20,7 @@ owncloud-local:
   mysql_user.present:
     - name: owncloud
     - host: localhost
-    - password: {{ pillar['owncloudpass'] }}
+    - password: {{ salt['pillar.get']('owncloud:owncloudpass', '') }}
     - require:
       - pkg: python-mysqldb
       - pkg: mysql-requirements
