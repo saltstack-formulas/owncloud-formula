@@ -2,8 +2,7 @@ include:
   - owncloud.python-mysqldb
 
 mysql-requirements:
-  pkg:
-    - installed
+  pkg.installed:
     - pkgs:
       - mysql-server
       - mysql-client
@@ -27,14 +26,12 @@ owncloud-local:
       - service: mysql
 
 ownclouddb:
-  mysql_database:
-    - present
+  mysql_database.present:
     - name: owncloud
     - require:
       - mysql_user: owncloud
       - pkg: python-mysqldb
-  mysql_grants:
-    - present
+  mysql_grants.present:
     - grant: all privileges
     - database: owncloud.*
     - host: localhost
