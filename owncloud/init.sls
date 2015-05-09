@@ -1,5 +1,8 @@
+{% from "owncloud/map.jinja" import owncloud with context %}
+
 include:
   - owncloud.mysql
+  - owncloud.repo
 
 apache2-stuff:
   pkg.installed:
@@ -11,15 +14,10 @@ apache2-stuff:
     - name: apache2
     - watch:
       - pkg: apache2-stuff
-      - pkg: owncloud
+      - pkg: {{ owncloud.pkg }}
 
-owncloud-repo:
-  pkgrepo.managed:
-    - name: deb http://download.opensuse.org/repositories/isv:ownCloud:community/xUbuntu_12.04/ /
-    - key_url: http://download.opensuse.org/repositories/isv:ownCloud:community/xUbuntu_12.04/Release.key
-    - gpgcheck: 1
-    - require_in:
-      - pkg: owncloud
 
-owncloud:
-  pkg.installed: []
+install-owncloud:
+  pkg.installed:
+    - name: {{ owncloud.pkg }}
+    - refresh: True
