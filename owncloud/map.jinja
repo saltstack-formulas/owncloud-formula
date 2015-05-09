@@ -1,0 +1,39 @@
+{% set owncloud = salt['grains.filter_by']({
+    'Debian': {
+        'pkg': 'owncloud',
+        'repo_file': '/etc/apt/sources.list.d/owncloud.list',
+    },
+    'Ubuntu': {
+        'pkg': 'owncloud',
+        'repo_file': '/etc/apt/sources.list.d/owncloud.list',
+    },
+}, merge=salt['grains.filter_by']({
+    'vivid':{
+        'pkg_repo': 'deb http://download.opensuse.org/repositories/isv:/ownCloud:/community/xUbuntu_15.04/ /',
+        'key_url': 'http://download.opensuse.org/repositories/isv:ownCloud:community/xUbuntu_15.04/Release.key',
+    },
+    'utopic': {
+        'pkg_repo': 'deb http://download.opensuse.org/repositories/isv:/ownCloud:/community/xUbuntu_14.10/ /',
+        'key_url': 'http://download.opensuse.org/repositories/isv:ownCloud:community/xUbuntu_14.10/Release.key',
+    },
+    'trusty': {
+        'pkg_repo':  'deb http://download.opensuse.org/repositories/isv:/ownCloud:/community/xUbuntu_14.04/ /',
+        'key_url': 'http://download.opensuse.org/repositories/isv:ownCloud:community/xUbuntu_14.04/Release.key',
+    },
+    'saucy':
+        'pkg_repo': 'deb http://download.opensuse.org/repositories/isv:/ownCloud:/community/xUbuntu_13.10/ /',
+        'key_url': 'http://download.opensuse.org/repositories/isv:ownCloud:community/xUbuntu_13.10/Release.key',
+    },
+    'precise': {
+        'pkg_repo': 'deb http://download.opensuse.org/repositories/isv:/ownCloud:/community/xUbuntu_12.04/ /',
+        'key_url': 'http://download.opensuse.org/repositories/isv:ownCloud:community/xUbuntu_12.04/Release.key',
+    },
+    'jessie': {
+        'pkg_repo': 'deb http://download.opensuse.org/repositories/isv:/ownCloud:/community/Debian_8.0/ /',
+        'key_url': 'http://download.opensuse.org/repositories/isv:ownCloud:community/Debian_8.0/Release.key',
+    },
+    'wheezy': {
+        'pkg_repo': 'deb http://download.opensuse.org/repositories/isv:/ownCloud:/community/Debian_7.0/ /',
+      'key_url': 'http://download.opensuse.org/repositories/isv:ownCloud:community/Debian_7.0/Release.key',
+    },
+}, grain='oscodename', merge=salt['pillar.get']('owncloud:lookup'))) %}
