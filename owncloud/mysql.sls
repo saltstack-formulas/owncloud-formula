@@ -8,7 +8,7 @@ mysql-requirements:
       - mysql-client
     - require_in:
       - service: mysql
-      - mysql_user: owncloud
+      - mysql_user: {{ salt['pillar.get']('owncloud:owncloud_user', '') }}
 
 mysql:
   service.running:
@@ -17,9 +17,9 @@ mysql:
 
 owncloud-local:
   mysql_user.present:
-    - name: owncloud
+    - name: {{ salt['pillar.get']('owncloud:owncloud_user', '') }}
     - host: localhost
-    - password: {{ salt['pillar.get']('owncloud:owncloudpass', '') }}
+    - password: {{ salt['pillar.get']('owncloud:owncloud_password', '') }}
     - require:
       - pkg: python-mysqldb
       - pkg: mysql-requirements
@@ -27,17 +27,17 @@ owncloud-local:
 
 ownclouddb:
   mysql_database.present:
-    - name: owncloud
+    - name: {{ salt['pillar.get']('owncloud:owncloud_database', '') }}
     - require:
-      - mysql_user: owncloud
+      - mysql_user: {{ salt['pillar.get']('owncloud:owncloud_user', '') }}
       - pkg: python-mysqldb
   mysql_grants.present:
     - grant: all privileges
-    - database: owncloud.*
+    - database:  {{ salt['pillar.get']('owncloud:owncloud_database', '') }}.*
     - host: localhost
-    - user: owncloud
+    - user: {{ salt['pillar.get']('owncloud:owncloud_user', '') }}
     - require:
-      - mysql_database: owncloud
+      - mysql_database: {{ salt['pillar.get']('owncloud:owncloud_database', '') }}
       - pkg: python-mysqldb
       - service: mysql
 
