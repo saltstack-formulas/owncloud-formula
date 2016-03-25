@@ -26,6 +26,6 @@ autoconfig-owncloud:
   file.managed:
     - template: jinja
     - name: /var/www/owncloud/config/autoconfig.php
-    - source: salt://owncloud/files/autoconfig.php.jinja
+    - source: salt://owncloud/autoconfig.php.jinja
     - user: www-data
     - group: www-data
