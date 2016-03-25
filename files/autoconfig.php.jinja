@@ -1,0 +1,10 @@
+<?php
+$AUTOCONFIG = array(
+  "directory"     => "/var/www/owncloud/data",
+  "dbtype"        => "mysql",
+  "dbname"        => "{{ salt['pillar.get']('owncloud:owncloud_database') }}",
+  "dbuser"        => "{{ salt['pillar.get']('owncloud:owncloud_user') }}",
+  "dbpass"        => "{{ salt['pillar.get']('owncloud:owncloud_password') }}",
+  "dbhost"        => "localhost",
+  "dbtableprefix" => "",
+);
