@@ -1,2 +1,0 @@
-include:
-  - owncloud.server-full

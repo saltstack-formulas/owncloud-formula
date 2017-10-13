@@ -14,11 +14,6 @@ Available states
 .. contents::
     :local:
 
-``owncloud``
-------------
-
-Alias for ``owncloud.server-full``
-
 ``owncloud.client``
 -------------------
 
