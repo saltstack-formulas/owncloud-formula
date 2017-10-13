@@ -1,4 +1,4 @@
-pkg: owncloud
+pkg: owncloud-files
 client_pkg: owncloud-client
 db_name: owncloud
 db_user: owncloud

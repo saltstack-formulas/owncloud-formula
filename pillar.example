@@ -7,7 +7,6 @@ owncloud:
     # ...
     # see also: owncloud/defaults.yaml and owncloud/osfamilymap.yaml
 
-
   # Must be set in some situations
   mysql_root_password: SuperSecurePassword
   # Will fail if none is set

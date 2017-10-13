@@ -1,43 +1,41 @@
+{% from "owncloud/map.jinja" import owncloud with context %}
+
 include:
   - owncloud.python-mysqldb
 
-mysql-requirements:
-  pkg.installed:
-    - pkgs:
-      - mysql-server
-      - mysql-client
-    - require_in:
-      - service: mysql
-      - mysql_user: {{ salt['pillar.get']('owncloud:owncloud_user', '') }}
-
-mysql:
-  service.running:
-    - watch:
-      - pkg: mysql-requirements
-
-owncloud-local:
+owncloud-database-user:
   mysql_user.present:
-    - name: {{ salt['pillar.get']('owncloud:owncloud_user', '') }}
+    - name: {{ owncloud.db_user }}
     - host: localhost
-    - password: {{ salt['pillar.get']('owncloud:owncloud_password', '') }}
+    # Make this thing fail if no password is set!
+    {% set password = salt['pillar.get']('owncloud:owncloud_password', False) %}
+    {% if not password %}
+        {{ salt.test.exception("Pillar owncloud:owncloud_password must be set!") }}
+    {% endif %}
+    - password: {{ password }}
+    {% set root_password = salt['pillar.get']('owncloud:mysql_root_password', False) %}
+    {% if not root_password %}
+      - connection_user: root
+      - connection_password: {{ root_password }}
+    {% endif %}
     - require:
       - pkg: python-mysqldb
-      - pkg: mysql-requirements
-      - service: mysql
+      - pkg: owncloud-mysql-client
+      - service: owncloud-mysql-server
 
-ownclouddb:
+owncloud-database:
   mysql_database.present:
     - name: {{ salt['pillar.get']('owncloud:owncloud_database', '') }}
     - require:
-      - mysql_user: {{ salt['pillar.get']('owncloud:owncloud_user', '') }}
+      - mysql_user: owncloud-database-user
       - pkg: python-mysqldb
   mysql_grants.present:
     - grant: all privileges
-    - database:  {{ salt['pillar.get']('owncloud:owncloud_database', '') }}.*
+    - database:  {{ owncloud.db_name }}.*
     - host: localhost
-    - user: {{ salt['pillar.get']('owncloud:owncloud_user', '') }}
+    - user: {{ owncloud.db_user }}
     - require:
-      - mysql_database: {{ salt['pillar.get']('owncloud:owncloud_database', '') }}
+      - mysql_database: owncloud-database
       - pkg: python-mysqldb
-      - service: mysql
+      - service: owncloud-mysql-server
 
