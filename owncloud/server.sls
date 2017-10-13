@@ -13,5 +13,5 @@ autoconfig-owncloud-server:
     - template: jinja
     - name: {{ owncloud.base_dir }}/config/autoconfig.php
     - source: salt://owncloud/files/autoconfig.php.jinja
-    - user: www-data
-    - group: www-data
+    - user: {{ owncloud.webserver_user }}
+    - group: {{ owncloud.webserver_group }}
