@@ -1,6 +1,20 @@
 owncloud:
+  lookup:
+    db_host: localhost
+    db_user: owncloud
+    db_name: owncloud
+    db_type: mysql
+    # ...
+    # see also: owncloud/defaults.yaml and owncloud/osfamilymap.yaml
+
+
+  # Must be set in some situations
+  mysql_root_password: SuperSecurePassword
+  # Will fail if none is set
   owncloud_password: owncloud_mysql_password
+  # Default: owncloud
   owncloud_user: owncloud_mysql_user
+  # Default: owncloud
   owncloud_database: owncloud_mysql_database
 
 

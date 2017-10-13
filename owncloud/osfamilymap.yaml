@@ -1,0 +1,11 @@
+Debian:
+  client_repo_file: /etc/apt/sources.list.d/owncloud-client.list
+  server_repo_file: /etc/apt/sources.list.d/owncloud-server.list
+FreeBSD:
+  pkg: owncloud
+  webserver_user: www
+  webserver_group: www
+  php_path: /usr/local/bin/php
+default:
+  client_repo_file: /etc/apt/sources.list.d/owncloud-client.list
+  server_repo_file: /etc/apt/sources.list.d/owncloud-server.list

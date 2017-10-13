@@ -1,0 +1,10 @@
+pkg: owncloud
+client_pkg: owncloud-client
+db_name: owncloud
+db_user: owncloud
+db_host: localhost
+db_type: mysql
+base_dir: /var/www/owncloud
+webserver_user: www-data
+webserver_group: www-data
+php_path: /usr/bin/php
