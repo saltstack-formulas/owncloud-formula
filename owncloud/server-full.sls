@@ -4,3 +4,4 @@ include:
   - owncloud.mysql-client
   - owncloud.mysql
   - owncloud.server
+  - owncloud.cron
