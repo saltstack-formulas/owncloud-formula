@@ -1,0 +1,11 @@
+{% from "owncloud/map.jinja" import owncloud with context %}
+<?php
+$AUTOCONFIG = array(
+  "directory"     => "{{ owncloud.base_dir }}/data",
+  "dbtype"        => "{{ owncloud.db_type }}",
+  "dbname"        => "{{ owncloud.db_name }}",
+  "dbuser"        => "{{ owncloud.db_user }}",
+  "dbpass"        => "{{ salt['pillar.get']('owncloud:owncloud_password') }}",
+  "dbhost"        => "{{ owncloud.db_host }}",
+  "dbtableprefix" => "",
+);

@@ -11,7 +11,7 @@ install-owncloud-server:
 autoconfig-owncloud-server:
   file.managed:
     - template: jinja
-    - name: /var/www/owncloud/config/autoconfig.php
+    - name: {{ owncloud.base_dir }}/config/autoconfig.php
     - source: salt://owncloud/files/autoconfig.php.jinja
     - user: www-data
     - group: www-data
