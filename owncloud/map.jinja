@@ -1,6 +1,9 @@
 {% import_yaml "owncloud/defaults.yaml" as default_settings %}
 {% import_yaml "owncloud/osfamilymap.yaml" as osfamilymap %}
 
+
+{% set osmajorrelease = salt['grains.get']('osmajorrelease', grains['osrelease_info'][0]) %}
+
 {% set owncloud = salt['grains.filter_by'](
     {'default': default_settings}
 , merge=salt['grains.filter_by'](
@@ -15,10 +18,10 @@
             'server_key_url': "https://download.owncloud.org/download/repositories/production/{}_{}/Release.key".format(grains['os'], grains['osrelease']),
         },
         'Debian': {
-            'client_pkg_repo': "http://download.opensuse.org/repositories/isv:/ownCloud:/desktop/{}_{}.0/ /".format(grains['os'], grains['osmajorrelease']),
-            'client_key_url': "https://download.opensuse.org/repositories/isv:ownCloud:desktop/{}_{}.0/Release.key".format(grains['os'], grains['osmajorrelease']),
-            'server_pkg_repo': "http://download.owncloud.org/download/repositories/production/{}_{}.0/ /".format(grains['os'], grains['osmajorrelease']),
-            'server_key_url': "https://download.owncloud.org/download/repositories/production/{}_{}.0/Release.key".format(grains['os'], grains['osmajorrelease']),
+            'client_pkg_repo': "http://download.opensuse.org/repositories/isv:/ownCloud:/desktop/{}_{}.0/ /".format(grains['os'], osmajorrelease),
+            'client_key_url': "https://download.opensuse.org/repositories/isv:ownCloud:desktop/{}_{}.0/Release.key".format(grains['os'], osmajorrelease),
+            'server_pkg_repo': "http://download.owncloud.org/download/repositories/production/{}_{}.0/ /".format(grains['os'], osmajorrelease),
+            'server_key_url': "https://download.owncloud.org/download/repositories/production/{}_{}.0/Release.key".format(grains['os'], osmajorrelease),
         }
     },
     grain='os'
