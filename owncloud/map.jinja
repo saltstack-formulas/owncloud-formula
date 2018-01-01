@@ -12,16 +12,16 @@
 , merge=salt['grains.filter_by'](
     {
         'default': {
-            'client_pkg_repo': "http://download.opensuse.org/repositories/isv:/ownCloud:/desktop/{}_{}/ /".format(grains['os'], grains['osrelease']),
-            'client_key_url': "https://download.opensuse.org/repositories/isv:ownCloud:desktop/{}_{}/Release.key".format(grains['os'], grains['osrelease']),
-            'server_pkg_repo': "http://download.owncloud.org/download/repositories/production/{}_{}/ /".format(grains['os'], grains['osrelease']),
-            'server_key_url': "https://download.owncloud.org/download/repositories/production/{}_{}/Release.key".format(grains['os'], grains['osrelease']),
+            'client_pkg_repo': "http://download.opensuse.org/repositories/isv:/ownCloud:/desktop/{0}_{1}/ /".format(grains['os'], grains['osrelease']),
+            'client_key_url': "https://download.opensuse.org/repositories/isv:ownCloud:desktop/{0}_{1}/Release.key".format(grains['os'], grains['osrelease']),
+            'server_pkg_repo': "http://download.owncloud.org/download/repositories/production/{0}_{1}/ /".format(grains['os'], grains['osrelease']),
+            'server_key_url': "https://download.owncloud.org/download/repositories/production/{0}_{1}/Release.key".format(grains['os'], grains['osrelease']),
         },
         'Debian': {
-            'client_pkg_repo': "http://download.opensuse.org/repositories/isv:/ownCloud:/desktop/{}_{}.0/ /".format(grains['os'], osmajorrelease),
-            'client_key_url': "https://download.opensuse.org/repositories/isv:ownCloud:desktop/{}_{}.0/Release.key".format(grains['os'], osmajorrelease),
-            'server_pkg_repo': "http://download.owncloud.org/download/repositories/production/{}_{}.0/ /".format(grains['os'], osmajorrelease),
-            'server_key_url': "https://download.owncloud.org/download/repositories/production/{}_{}.0/Release.key".format(grains['os'], osmajorrelease),
+            'client_pkg_repo': "http://download.opensuse.org/repositories/isv:/ownCloud:/desktop/{0}_{1}.0/ /".format(grains['os'], osmajorrelease),
+            'client_key_url': "https://download.opensuse.org/repositories/isv:ownCloud:desktop/{0}_{1}.0/Release.key".format(grains['os'], osmajorrelease),
+            'server_pkg_repo': "http://download.owncloud.org/download/repositories/production/{0}_{1}.0/ /".format(grains['os'], osmajorrelease),
+            'server_key_url': "https://download.owncloud.org/download/repositories/production/{0}_{1}.0/Release.key".format(grains['os'], osmajorrelease),
         }
     },
     grain='os'
