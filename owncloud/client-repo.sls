@@ -3,12 +3,11 @@
 {% if grains['os_family'] == 'Debian' %}
 owncloud-repo:
   pkgrepo.managed:
-    - name: {{ owncloud.pkg_repo }}
-    - file: {{ owncloud.repo_file }}
-    - key_url: {{ owncloud.key_url }}
+    - name: deb {{ owncloud.client_pkg_repo }}
+    - file: {{ owncloud.client_repo_file }}
+    - key_url: {{ owncloud.client_key_url }}
     - gpgcheck: 1
-    - require_in:
-      - pkg: {{ owncloud.pkg }}
+    - clean_file: True
 {%- endif %}
 
      

@@ -1,39 +1,39 @@
-{% set owncloud = salt['grains.filter_by']({
-    'Debian': {
-        'pkg': 'owncloud',
-        'repo_file': '/etc/apt/sources.list.d/owncloud.list',
+{% import_yaml "owncloud/defaults.yaml" as default_settings %}
+{% import_yaml "owncloud/osfamilymap.yaml" as osfamilymap %}
+
+
+{% set osmajorrelease = salt['grains.get']('osmajorrelease', grains['osrelease_info'][0]) %}
+
+{% set owncloud = salt['grains.filter_by'](
+    {'default': default_settings}
+, merge=salt['grains.filter_by'](
+    osfamilymap,
+    grain='os_family'
+, merge=salt['grains.filter_by'](
+    {
+        'default': {
+            'client_pkg_repo': "http://download.opensuse.org/repositories/isv:/ownCloud:/desktop/{0}_{1}/ /".format(grains['os'], grains['osrelease']),
+            'client_key_url': "https://download.opensuse.org/repositories/isv:ownCloud:desktop/{0}_{1}/Release.key".format(grains['os'], grains['osrelease']),
+            'server_pkg_repo': "http://download.owncloud.org/download/repositories/production/{0}_{1}/ /".format(grains['os'], grains['osrelease']),
+            'server_key_url': "https://download.owncloud.org/download/repositories/production/{0}_{1}/Release.key".format(grains['os'], grains['osrelease']),
+        },
+        'Debian': {
+            'client_pkg_repo': "http://download.opensuse.org/repositories/isv:/ownCloud:/desktop/{0}_{1}.0/ /".format(grains['os'], osmajorrelease),
+            'client_key_url': "https://download.opensuse.org/repositories/isv:ownCloud:desktop/{0}_{1}.0/Release.key".format(grains['os'], osmajorrelease),
+            'server_pkg_repo': "http://download.owncloud.org/download/repositories/production/{0}_{1}.0/ /".format(grains['os'], osmajorrelease),
+            'server_key_url': "https://download.owncloud.org/download/repositories/production/{0}_{1}.0/Release.key".format(grains['os'], osmajorrelease),
+        }
     },
-    'Ubuntu': {
-        'pkg': 'owncloud',
-        'repo_file': '/etc/apt/sources.list.d/owncloud.list',
-    },
-}, merge=salt['grains.filter_by']({
-    'vivid':{
-        'pkg_repo': 'deb http://download.opensuse.org/repositories/isv:/ownCloud:/community/xUbuntu_15.04/ /',
-        'key_url': 'http://download.opensuse.org/repositories/isv:ownCloud:community/xUbuntu_15.04/Release.key',
-    },
-    'utopic': {
-        'pkg_repo': 'deb http://download.opensuse.org/repositories/isv:/ownCloud:/community/xUbuntu_14.10/ /',
-        'key_url': 'http://download.opensuse.org/repositories/isv:ownCloud:community/xUbuntu_14.10/Release.key',
-    },
-    'trusty': {
-        'pkg_repo':  'deb http://download.opensuse.org/repositories/isv:/ownCloud:/community/xUbuntu_14.04/ /',
-        'key_url': 'http://download.opensuse.org/repositories/isv:ownCloud:community/xUbuntu_14.04/Release.key',
-    },
-    'saucy': {
-        'pkg_repo': 'deb http://download.opensuse.org/repositories/isv:/ownCloud:/community/xUbuntu_13.10/ /',
-        'key_url': 'http://download.opensuse.org/repositories/isv:ownCloud:community/xUbuntu_13.10/Release.key',
-    },
-    'precise': {
-        'pkg_repo': 'deb http://download.opensuse.org/repositories/isv:/ownCloud:/community/xUbuntu_12.04/ /',
-        'key_url': 'http://download.opensuse.org/repositories/isv:ownCloud:community/xUbuntu_12.04/Release.key',
-    },
-    'jessie': {
-        'pkg_repo': 'deb http://download.opensuse.org/repositories/isv:/ownCloud:/community/Debian_8.0/ /',
-        'key_url': 'http://download.opensuse.org/repositories/isv:ownCloud:community/Debian_8.0/Release.key',
-    },
-    'wheezy': {
-        'pkg_repo': 'deb http://download.opensuse.org/repositories/isv:/ownCloud:/community/Debian_7.0/ /',
-      'key_url': 'http://download.opensuse.org/repositories/isv:ownCloud:community/Debian_7.0/Release.key',
-    },
-}, grain='oscodename', merge=salt['pillar.get']('owncloud:lookup'))) %}
+    grain='os'
+, merge=salt['pillar.get']('owncloud:lookup')
+))) %}
+
+{%  set db_user = salt['pillar.get']('owncloud:owncloud_user') %}
+{%  if db_user %}
+{%      do owncloud.update({'db_user': db_user}) %}
+{%  endif %}
+
+{%  set db_name = salt['pillar.get']('owncloud:owncloud_database') %}
+{%  if db_name %}
+{%      do owncloud.update({'db_name': db_name}) %}
+{%  endif %}
