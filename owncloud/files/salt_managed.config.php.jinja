@@ -1,0 +1,9 @@
+<?php
+//
+// THIS FILE IS MANAGED VIA SALTSTACK. DO NOT EDIT IT.
+//
+$CONFIG = array (
+{% for key, value in salt['pillar.get']('owncloud:salt_managed_config', {}).items() -%}
+{{ '  ' }}"{{ key }}" => {{ '"'+value+'"' if value is string else value }},
+{% endfor -%}
+);

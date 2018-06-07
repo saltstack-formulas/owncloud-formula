@@ -15,3 +15,11 @@ autoconfig-owncloud-server:
     - source: salt://owncloud/files/autoconfig.php.jinja
     - user: {{ owncloud.webserver_user }}
     - group: {{ owncloud.webserver_group }}
+
+salt_managed_config-owncloud-server:
+  file.managed:
+    - template: jinja
+    - name: {{ owncloud.base_dir }}/config/salt_managed.config.php
+    - source: salt://owncloud/files/salt_managed.config.php.jinja
+    - user: {{ owncloud.webserver_user }}
+    - group: {{ owncloud.webserver_group }}
