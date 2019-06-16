@@ -1,9 +1,34 @@
+{%- from "owncloud/map.jinja" import owncloud with context %}
+{%- set salt_managed_config = salt['pillar.get']('owncloud:salt_managed_config', salt_managed_config, merge=True) %}
+
+{%- if owncloud.get('apcu', {}).get('enable', False) %}
+{%-   if not salt_managed_config.get('memcache.local') %}
+{%-     do salt_managed_config.update({'memcache.local': "'\\OC\Memcache\APCu'"}) %}
+{%-   endif %}
+{%- endif %}
+
+{%- set redis = owncloud.get('redis', {}) %}
+{%- if redis.get('enable', False) %}
+{%-   if not salt_managed_config.get('filelocking.enabled') %}
+{%-     do salt_managed_config.update({'filelocking.enabled': 'true'}) %}
+{%-   endif %}
+{%-   if not salt_managed_config.get('memcache.distributed') %}
+{%-     do salt_managed_config.update({'memcache.distributed': "'\\OC\\Memcache\\Redis'"}) %}
+{%-   endif %}
+{%-   if not salt_managed_config.get('memcache.locking') %}
+{%-     do salt_managed_config.update({'memcache.locking': "'\\OC\\Memcache\\Redis'"}) %}
+{%-   endif %}
+{%-   if not salt_managed_config.get('redis') %}
+{%-     do salt_managed_config.update({'redis': "array ('host' => '{}', 'port' => {}, 'timeout' => 0, 'dbindex' => 0)".format(redis.bind, redis.port)})
+%}
+{%-   endif %}
+{%- endif -%}
 <?php
 //
 // THIS FILE IS MANAGED VIA SALTSTACK. DO NOT EDIT IT.
 //
 $CONFIG = array (
-{% for key, value in salt['pillar.get']('owncloud:salt_managed_config', {}).items() -%}
-{{ '  ' }}"{{ key }}" => {{ '"'+value+'"' if value is string else value }},
+{% for key, value in salt_managed_config.items() -%}
+{{ '  ' }}"{{ key }}" => {{ value }},
 {% endfor -%}
 );

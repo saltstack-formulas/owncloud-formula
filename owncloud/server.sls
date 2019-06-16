@@ -23,3 +23,5 @@ salt_managed_config-owncloud-server:
     - source: salt://owncloud/files/salt_managed.config.php.jinja
     - user: {{ owncloud.webserver_user }}
     - group: {{ owncloud.webserver_group }}
+    - context:
+        salt_managed_config: {{ owncloud.get('salt_managed_config', {})  | json }}

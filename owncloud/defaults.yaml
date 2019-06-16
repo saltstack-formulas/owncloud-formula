@@ -8,3 +8,15 @@ base_dir: /var/www/owncloud
 webserver_user: www-data
 webserver_group: www-data
 php_path: /usr/bin/php
+apcu:
+  enable: True
+  pkg: php-apcu
+redis:
+  enable: True
+  pkg: redis
+  bind: 127.0.0.1
+  port: 6379
+  service: redis
+  php_pkg: php-redis
+  config: /etc/redis/redis.conf
+salt_managed_config: {}
