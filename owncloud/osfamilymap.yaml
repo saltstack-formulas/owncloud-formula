@@ -2,10 +2,15 @@ Debian:
   client_repo_file: /etc/apt/sources.list.d/owncloud-client.list
   server_repo_file: /etc/apt/sources.list.d/owncloud-server.list
 FreeBSD:
-  pkg: owncloud
+  pkg: owncloud-php72
   webserver_user: www
   webserver_group: www
   php_path: /usr/local/bin/php
+  apcu:
+    pkg: php72-pecl-APCu
+  redis:
+    php_pkg: php72-pecl-redis
+    config: /usr/local/etc/redis.conf
 default:
   client_repo_file: /etc/apt/sources.list.d/owncloud-client.list
   server_repo_file: /etc/apt/sources.list.d/owncloud-server.list

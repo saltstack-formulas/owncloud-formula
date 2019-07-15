@@ -16,8 +16,7 @@ owncloud:
   # Default: owncloud
   owncloud_database: owncloud_mysql_database
 
-
-
-
-
-
+  # Additional (non-essential) configuration
+  # See https://doc.owncloud.org/server/10.0/admin_manual/configuration/server/config_sample_php_parameters.html
+  salt_managed_config:
+    enable_avatars: false

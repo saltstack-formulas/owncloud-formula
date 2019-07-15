@@ -90,3 +90,21 @@ You'll need to configure Apache2 manually!
 Installs a cron job to trigger background tasks.
 
 See https://doc.owncloud.org/server/latest/admin_manual/configuration/server/background_jobs_configuration.html#cron
+
+``owncloud.apcu``
+-----------------
+
+Installs the APCu PHP module, which provides in-memory caching.
+
+See https://doc.owncloud.com/server/admin_manual/configuration/server/oc_server_tuning.html
+
+This is only a minimalistic implementation of APCu for a vanilla Owncloud installation. If you need a more sophisticated configuration, please feel free to use a fully-fledged formula instead.
+
+``owncloud.redis``
+-----------------
+
+Installs a minimalistic, local instance of Redis, which provides file locking.
+
+See https://doc.owncloud.com/server/admin_manual/configuration/server/oc_server_tuning.html
+
+This is only a minimalistic implementation of redis for a vanilla Owncloud installation. If you need a more sophisticated configuration, please feel free to use a fully-fledged formula like https://github.com/saltstack-formulas/redis-formula.
