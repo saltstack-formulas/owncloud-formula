@@ -8,6 +8,8 @@ base_dir: /var/www/owncloud
 webserver_user: www-data
 webserver_group: www-data
 php_path: /usr/bin/php
+# was: cron_command: 'cron.php'
+cron_command: 'occ system:cron'
 apcu:
   enable: True
   pkg: php-apcu
