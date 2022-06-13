@@ -7,6 +7,10 @@ owncloud:
     # ...
     # see also: owncloud/defaults.yaml and owncloud/osfamilymap.yaml
 
+    redis:
+      # Set this to 'no', if your redis instance runs on a localhost address other than 127.0.0.1
+      protected_mode: 'yes'
+
   # Must be set in some situations
   mysql_root_password: SuperSecurePassword
   # Will fail if none is set
