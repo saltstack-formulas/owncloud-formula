@@ -21,4 +21,5 @@ redis:
   service: redis
   php_pkg: php-redis
   config: /etc/redis/redis.conf
+  protected_mode: 'yes'
 salt_managed_config: {}
